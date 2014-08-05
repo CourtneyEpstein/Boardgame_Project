@@ -35,10 +35,13 @@ def get_viable_game_ids():
 all_gameid=get_viable_game_ids()
 
 '''Define connection to the MySQL database, boardgamegeek'''
-con = mdb.connect('localhost', 'root', 'mandrake', 'boardgamegeek')
-
+f=open('mysql_password.txt','r')
+mysqlpass=f.read().split('\n')
+f.close()
+con = mdb.connect('localhost', mysqlpass[0], mysqlpass[1], 'boardgamegeek')
 
 for gameid in all_gameid[0:50]:
+# for gameid in all_gameid[0:1]:
     print gameid
     folder,filenames=get_names(gameid)
     '''Store information about boardgames in dictionary bg'''    
@@ -46,6 +49,7 @@ for gameid in all_gameid[0:50]:
     '''Open connection to MySQL'''  
     with con:
         cur = con.cursor()
+        '''Only create a new table for the first entry'''
         if(gameid == 1):
             # MAKE TABLE THAT CONTAINS USER PREFERENCES
             cur.execute('DROP TABLE IF EXISTS Preferences')
@@ -53,19 +57,18 @@ for gameid in all_gameid[0:50]:
             `USER_NAME` CHAR(20),\
             `GAME_ID` INT(6),\
             `GAME_NAME` CHAR(100),\
-            `USER_RATING` DECIMAL(6,3)\
+            `USER_RATING` DECIMAL(8,5)\
             ) DEFAULT CHARSET=utf8;")
             # MAKE TABLE THAT CONTAINS BOARDGAME ATTRIBUTES
             '''Make list of column names'''
             all_colNames = [\
-                ['BOARDGAME_ID','INT(6)'],
-                ['BOARDGAME_NAME','CHAR(20)'],
+                ['GAME_ID','INT(6)'],
+                ['GAME_NAME','CHAR(100)'],
                 ['PLAYING_TIME','DECIMAL(10,1)'],
-                ['BOARDGAME_WEIGHT','DECIMAL(10,5)'],
+                ['GAME_WEIGHT','DECIMAL(10,5)'],
                 ['MIN_PLAYER_MANUFACTURER','INT(2)'],
                 ['MAX_PLAYER_MANUFACTURER','INT(2)']
                 ]
-            # print len(all_colNames)
             for i in range(1,31):
                 all_colNames.append(["POLL_BEST_NUM_PLAYERS={0}".format(i),'DECIMAL(6,0)'])
                 all_colNames.append(["POLL_OK_NUM_PLAYERS={0}".format(i),'DECIMAL(6,0)'])
@@ -83,8 +86,7 @@ for gameid in all_gameid[0:50]:
             create_games_table_cmd = 'CREATE TABLE `Games` ( '
             for col_name,col_format in all_colNames:
                 create_games_table_cmd=create_games_table_cmd+'`{0}` {1},'.format(col_name,col_format)
-            create_games_table_cmd=create_games_table_cmd+'PRIMARY KEY (`BOARDGAME_ID`)) DEFAULT CHARSET=utf8;;'
-            # print create_games_table_cmd
+            create_games_table_cmd=create_games_table_cmd+'PRIMARY KEY (`GAME_ID`)) DEFAULT CHARSET=utf8;;'
             cur.execute(create_games_table_cmd)
             # MAKE TABLE THAT CONTAINS BOARDGAME INFORMATION FOR DISPLAY ON WEBSITE
             cur.execute('DROP TABLE IF EXISTS Basics')
@@ -104,12 +106,12 @@ for gameid in all_gameid[0:50]:
             comments=soup.find_all('comment')
             expansions=soup.find_all(type="boardgameexpansion")
             if(i==0):
-                colNames=['BOARDGAME_ID','BOARDGAME_NAME','MIN_PLAYER_MANUFACTURER','MAX_PLAYER_MANUFACTURER','BOARDGAME_WEIGHT','PLAYING_TIME']
-                bg['BOARDGAME_NAME']         ="'"+soup.find("name",type="primary").attrs['value']+"'"
-                bg['BOARDGAME_ID']           =soup.find(type="boardgame")['id']
+                colNames=['GAME_ID','GAME_NAME','MIN_PLAYER_MANUFACTURER','MAX_PLAYER_MANUFACTURER','GAME_WEIGHT','PLAYING_TIME']
+                bg['GAME_NAME']         ="'"+soup.find("name",type="primary").attrs['value']+"'"
+                bg['GAME_ID']           =soup.find(type="boardgame")['id']
                 bg['MIN_PLAYER_MANUFACTURER']=soup.minplayers['value']
                 bg['MAX_PLAYER_MANUFACTURER']=soup.maxplayers['value']
-                bg['BOARDGAME_WEIGHT']       =soup.averageweight['value']
+                bg['GAME_WEIGHT']       =soup.averageweight['value']
                 bg['PLAYING_TIME']           =soup.playingtime['value']
                 if(bg['PLAYING_TIME']==0):
                     bg['PLAYING_TIME']=None
@@ -149,11 +151,11 @@ for gameid in all_gameid[0:50]:
                 bg['IMAGE']=soup.image.text
                 bg['URL']='http://boardgamegeek.com/boardgame/{0}'.format(gameid)
                 bg['YEAR']=soup.yearpublished['value']
-                insert_basics_cmd = 'INSERT INTO Basics VALUES('+",".join([bg['BOARDGAME_ID'],bg['BOARDGAME_NAME'],bg['YEAR'],"'"+bg['URL']+"'","'"+bg['IMAGE']+"'",'"'+bg['DESCRIPTION']+'"']) +');'
+                insert_basics_cmd = 'INSERT INTO Basics VALUES('+",".join([bg['GAME_ID'],bg['GAME_NAME'],bg['YEAR'],"'"+bg['URL']+"'","'"+bg['IMAGE']+"'",'"'+bg['DESCRIPTION']+'"']) +');'
                 cur.execute(insert_basics_cmd)
             
             '''For each comment, extract that username and rating.
             Define and execute MySQL command here to fill the Preferences table.'''
             for comment in comments:
-                insert_preferences_cmd = 'INSERT INTO Preferences VALUES('+','.join(["'"+comment.attrs['username']+"'",bg['BOARDGAME_ID'],bg['BOARDGAME_NAME'],comment.attrs['rating']]) +');'
+                insert_preferences_cmd = 'INSERT INTO Preferences VALUES('+','.join(["'"+comment.attrs['username']+"'",bg['GAME_ID'],bg['GAME_NAME'],comment.attrs['rating']]) +');'
                 cur.execute(insert_preferences_cmd)
