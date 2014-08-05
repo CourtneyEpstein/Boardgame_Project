@@ -107,7 +107,7 @@ for gameid in all_gameid[0:50]:
             expansions=soup.find_all(type="boardgameexpansion")
             if(i==0):
                 colNames=['GAME_ID','GAME_NAME','MIN_PLAYER_MANUFACTURER','MAX_PLAYER_MANUFACTURER','GAME_WEIGHT','PLAYING_TIME']
-                bg['GAME_NAME']         ="'"+soup.find("name",type="primary").attrs['value']+"'"
+                bg['GAME_NAME']         ='"'+soup.find("name",type="primary").attrs['value']+'"'
                 bg['GAME_ID']           =soup.find(type="boardgame")['id']
                 bg['MIN_PLAYER_MANUFACTURER']=soup.minplayers['value']
                 bg['MAX_PLAYER_MANUFACTURER']=soup.maxplayers['value']
