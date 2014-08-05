@@ -111,12 +111,16 @@ for gameid in all_gameid[0:1]:
             mechanics=soup.find_all(type="boardgamemechanic")
             expansions=soup.find_all(type="boardgameexpansion")
             if(i==0):
-                colNames=['BOARDGAME_NAME','BOARDGAME_ID','MIN_PLAYER_MANUFACTURER','MAX_PLAYER_MANUFACTURER','BOARDGAME_WEIGHT']
+                colNames=['BOARDGAME_NAME','BOARDGAME_ID','MIN_PLAYER_MANUFACTURER','MAX_PLAYER_MANUFACTURER','BOARDGAME_WEIGHT','PLAYING_TIME']
                 bg['BOARDGAME_NAME']         =soup.find("name",type="primary").attrs['value']
                 bg['BOARDGAME_ID']           =soup.find(type="boardgame")['id']
                 bg['MIN_PLAYER_MANUFACTURER']=soup.minplayers['value']
                 bg['MAX_PLAYER_MANUFACTURER']=soup.maxplayers['value']
                 bg['BOARDGAME_WEIGHT']       =soup.averageweight['value']
+                bg['PLAYING_TIME']           =soup.playingtime['value']
+                if(bg['PLAYING_TIME']==0):
+                    bg['PLAYING_TIME']=None
+
                 # 30 looks like the maximum number of players 
                 for nplayers in range(int(bg['MIN_PLAYER_MANUFACTURER']),min(31,int(bg['MAX_PLAYER_MANUFACTURER'])+1)):
                     poll_result=soup.find("results",numplayers=nplayers)
@@ -133,12 +137,10 @@ for gameid in all_gameid[0:1]:
                 # Ages
                 # if less than half of the people think that the maximimum age
                 # is over 21, then take the mode age <21 as the maximum age
-                bg['PLAYING_TIME']=soup.playingtime['value']
-                if(bg['PLAYING_TIME']==0):
-                    bg['PLAYING_TIME']=None
                 
-        #     #     boardgame_mechanic=[ mechanic.attrs['value'] for mechanic in soup.find_all('link',type='boardgamemechanic')]
-
+                boardgame_mechanic=[ 'MECHANIC: '+mechanic.attrs['value'] for mechanic in soup.find_all('link',type='boardgamemechanic')]
+                
+                
                 # print bg
 
                 '''The table Basics is mostly intended for displaying information on the website.
@@ -192,15 +194,5 @@ for gameid in all_gameid[0:1]:
 # user=pd.Series(data=user_rating,index=user_name)
 # count,division = np.histogram(user)
 
-# print boardgame_name
-# print boardgame_id
-# print boardgame_family_name
-# print boardgame_family_id
-# print boardgame_min_player,boardgame_max_player
-# print boardgame_play_time
-# print boardgame_year
-# print boardgame_image
-# print boardgame_mechanic
-# print boardgame_weight
-# print users
+
 
