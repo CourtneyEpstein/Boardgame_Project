@@ -1,84 +1,84 @@
-Abstract Strategy
-Action / Dexterity
-Adventure
-Age of Reason
-American Civil War
-American Indian Wars
-American Revolutionary War
-American West
-Ancient
-Animals
-Arabian
-Aviation / Flight
-Bluffing
-Book
-Card Game
-Children's Game
-City Building
-Civil War
-Civilization
-Collectible Components
-Comic Book / Strip
-Deduction
-Dice
-Economic
-Educational
-Electronic
-Environmental
-Expansion for Base-game
-Exploration
-Fan Expansion
-Fantasy
-Farming
-Fighting
-Game System
-Horror
-Humor
-Industry / Manufacturing
-Korean War
-Mafia
-Math
-Mature / Adult
-Maze
-Medical
-Medieval
-Memory
-Miniatures
-Modern Warfare
-Movies / TV / Radio theme
-Murder/Mystery
-Music
-Mythology
-Napoleonic
-Nautical
-Negotiation
-Novel-based
-Number
-Party Game
-Pike and Shot
-Pirates
-Political
-Post-Napoleonic
-Prehistoric
-Print & Play
-Puzzle
-Racing
-Real-time
-Religious
-Renaissance
-Science Fiction
-Space Exploration
-Spies/Secret Agents
-Sports
-Territory Building
-Trains
-Transportation
-Travel
-Trivia
-Video Game Theme
-Vietnam War
-Wargame
-Word Game
-World War I
-World War II
-Zombies
+CATEGORY: Abstract Strategy
+CATEGORY: Action / Dexterity
+CATEGORY: Adventure
+CATEGORY: Age of Reason
+CATEGORY: American Civil War
+CATEGORY: American Indian Wars
+CATEGORY: American Revolutionary War
+CATEGORY: American West
+CATEGORY: Ancient
+CATEGORY: Animals
+CATEGORY: Arabian
+CATEGORY: Aviation / Flight
+CATEGORY: Bluffing
+CATEGORY: Book
+CATEGORY: Card Game
+CATEGORY: Children's Game
+CATEGORY: City Building
+CATEGORY: Civil War
+CATEGORY: Civilization
+CATEGORY: Collectible Components
+CATEGORY: Comic Book / Strip
+CATEGORY: Deduction
+CATEGORY: Dice
+CATEGORY: Economic
+CATEGORY: Educational
+CATEGORY: Electronic
+CATEGORY: Environmental
+CATEGORY: Expansion for Base-game
+CATEGORY: Exploration
+CATEGORY: Fan Expansion
+CATEGORY: Fantasy
+CATEGORY: Farming
+CATEGORY: Fighting
+CATEGORY: Game System
+CATEGORY: Horror
+CATEGORY: Humor
+CATEGORY: Industry / Manufacturing
+CATEGORY: Korean War
+CATEGORY: Mafia
+CATEGORY: Math
+CATEGORY: Mature / Adult
+CATEGORY: Maze
+CATEGORY: Medical
+CATEGORY: Medieval
+CATEGORY: Memory
+CATEGORY: Miniatures
+CATEGORY: Modern Warfare
+CATEGORY: Movies / TV / Radio theme
+CATEGORY: Murder/Mystery
+CATEGORY: Music
+CATEGORY: Mythology
+CATEGORY: Napoleonic
+CATEGORY: Nautical
+CATEGORY: Negotiation
+CATEGORY: Novel-based
+CATEGORY: Number
+CATEGORY: Party Game
+CATEGORY: Pike and Shot
+CATEGORY: Pirates
+CATEGORY: Political
+CATEGORY: Post-Napoleonic
+CATEGORY: Prehistoric
+CATEGORY: Print & Play
+CATEGORY: Puzzle
+CATEGORY: Racing
+CATEGORY: Real-time
+CATEGORY: Religious
+CATEGORY: Renaissance
+CATEGORY: Science Fiction
+CATEGORY: Space Exploration
+CATEGORY: Spies/Secret Agents
+CATEGORY: Sports
+CATEGORY: Territory Building
+CATEGORY: Trains
+CATEGORY: Transportation
+CATEGORY: Travel
+CATEGORY: Trivia
+CATEGORY: Video Game Theme
+CATEGORY: Vietnam War
+CATEGORY: Wargame
+CATEGORY: Word Game
+CATEGORY: World War I
+CATEGORY: World War II
+CATEGORY: Zombies

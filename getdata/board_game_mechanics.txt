@@ -1,51 +1,51 @@
-Acting
-Action / Movement Programming
-Action Point Allowance System
-Area Control / Area Influence
-Area Enclosure
-Area Movement
-Area-Impulse
-Auction/Bidding
-Betting/Wagering
-Campaign / Battle Card Driven
-Card Drafting
-Chit-Pull System
-Co-operative Play
-Commodity Speculation
-Crayon Rail System
-Deck / Pool Building
-Dice Rolling
-Grid Movement
-Hand Management
-Hex-and-Counter
-Line Drawing
-Memory
-Modular Board
-Paper-and-Pencil
-Partnerships
-Pattern Building
-Pattern Recognition
-Pick-up and Deliver
-Player Elimination
-Point to Point Movement
-Press Your Luck
-Rock-Paper-Scissors
-Role Playing
-Roll / Spin and Move
-Route/Network Building
-Secret Unit Deployment
-Set Collection
-Simulation
-Simultaneous Action Selection
-Singing
-Stock Holding
-Storytelling
-Take That
-Tile Placement
-Time Track
-Trading
-Trick-taking
-Variable Phase Order
-Variable Player Powers
-Voting
-Worker Placement
+MECHANIC: Acting
+MECHANIC: Action / Movement Programming
+MECHANIC: Action Point Allowance System
+MECHANIC: Area Control / Area Influence
+MECHANIC: Area Enclosure
+MECHANIC: Area Movement
+MECHANIC: Area-Impulse
+MECHANIC: Auction/Bidding
+MECHANIC: Betting/Wagering
+MECHANIC: Campaign / Battle Card Driven
+MECHANIC: Card Drafting
+MECHANIC: Chit-Pull System
+MECHANIC: Co-operative Play
+MECHANIC: Commodity Speculation
+MECHANIC: Crayon Rail System
+MECHANIC: Deck / Pool Building
+MECHANIC: Dice Rolling
+MECHANIC: Grid Movement
+MECHANIC: Hand Management
+MECHANIC: Hex-and-Counter
+MECHANIC: Line Drawing
+MECHANIC: Memory
+MECHANIC: Modular Board
+MECHANIC: Paper-and-Pencil
+MECHANIC: Partnerships
+MECHANIC: Pattern Building
+MECHANIC: Pattern Recognition
+MECHANIC: Pick-up and Deliver
+MECHANIC: Player Elimination
+MECHANIC: Point to Point Movement
+MECHANIC: Press Your Luck
+MECHANIC: Rock-Paper-Scissors
+MECHANIC: Role Playing
+MECHANIC: Roll / Spin and Move
+MECHANIC: Route/Network Building
+MECHANIC: Secret Unit Deployment
+MECHANIC: Set Collection
+MECHANIC: Simulation
+MECHANIC: Simultaneous Action Selection
+MECHANIC: Singing
+MECHANIC: Stock Holding
+MECHANIC: Storytelling
+MECHANIC: Take That
+MECHANIC: Tile Placement
+MECHANIC: Time Track
+MECHANIC: Trading
+MECHANIC: Trick-taking
+MECHANIC: Variable Phase Order
+MECHANIC: Variable Player Powers
+MECHANIC: Voting
+MECHANIC: Worker Placement
