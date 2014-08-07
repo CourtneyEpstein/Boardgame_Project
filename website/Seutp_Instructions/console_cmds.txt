@@ -1,0 +1,24 @@
+var mycontainer;
+$.get('db_json',function(data) {mycontainer = data})
+mycontainer
+
+If you have nested dictionaries and lists, 
+can write into json, send via javascript, 
+then you can do anything to them...
+
+#Look at the keys so that they match up
+
+mycontainer.cities[0]
+
+display them to the user:
+
+for (i=0; i < mycontainer['cities'].length; i++) {
+if (mycontainer['cities'][i]['population'] > 1000000) {
+$("body").append('<p>' + mycontainer['cities'][i]
+['name'] + ": " + mycontainer['cities'][i]['population'] +
+'</p>')
+}
+}
+
+$('img')[0].attributes
+
