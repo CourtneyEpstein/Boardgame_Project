@@ -32,7 +32,10 @@ def get_viable_game_ids():
     all_gameid=sorted([int(name[4:]) for name in contents if(name[0:4]=='game')])
     return all_gameid
 
+skipped_game_ids=[]
+
 all_gameid=get_viable_game_ids()
+
 
 '''Define connection to the MySQL database, boardgamegeek'''
 f=open('mysql_password.txt','r')
@@ -42,7 +45,7 @@ con = mdb.connect('localhost', mysqlpass[0], mysqlpass[1], 'boardgamegeek',chars
 
 # for ii,gameid in enumerate(all_gameid[0:1000]):
 # for ii,gameid in enumerate(all_gameid[1000:5000]):
-for ii,gameid in enumerate(all_gameid[8657:]):
+for ii,gameid in enumerate(all_gameid[28853:]):
 # for gameid in all_gameid[0:1]:
     print ii,gameid
     folder,filenames=get_names(gameid)
@@ -108,15 +111,24 @@ for ii,gameid in enumerate(all_gameid[8657:]):
             comments=soup.find_all('comment')
             expansions=soup.find_all(type="boardgameexpansion")
             if(i==0):
+                skip=False;
                 '''Store information about boardgames in dictionary bg'''
                 bg={name:None for name in all_colNames }
 
                 colNames=['GAME_ID','GAME_NAME','MIN_PLAYER_MANUFACTURER','MAX_PLAYER_MANUFACTURER','GAME_WEIGHT','PLAYING_TIME']
                 bg['GAME_ID']=soup.find(type="boardgame")['id']
                 bg['GAME_NAME']=soup.find("name",type="primary").attrs['value']
-                if(bg['GAME_ID']=='10405'):
-                    print "in if"
-                    bg['GAME_NAME']=soup.find("name",type="alternate").attrs['value']
+                # if(bg['GAME_ID']=='10405' or bg['GAME_ID']=='22024'):
+                    # bg['GAME_NAME']=soup.find("name",type="alternate").attrs['value']
+                '''These I had to look up in Google Translate'''
+                if(bg['GAME_ID']=='19513'):
+                    bg['GAME_NAME']='Labyrinth Wizard'
+                if(bg['GAME_ID']=='22674'):
+                    bg['GAME_NAME']='Mlawa 1939'
+                if(bg['GAME_ID']=='23352'):
+                    bg['GAME_NAME']='The Orange Revolution'
+                if(bg['GAME_ID']=='25232'):
+                    bg['GAME_NAME']='Become President'
                 try:
                     bg['MIN_PLAYER_MANUFACTURER']=soup.minplayers['value']
                 except:
@@ -137,16 +149,17 @@ for ii,gameid in enumerate(all_gameid[8657:]):
                     continue
 
                 # 30 looks like the maximum number of players 
-                for nplayers in range(1,min(31,int(bg['MAX_PLAYER_MANUFACTURER'])+1)):
-                    poll_result=soup.find("results",numplayers=nplayers)
-                    try:
-                        best="POLL_BEST_NUM_PLAYERS={0}".format(nplayers)
-                        ok="POLL_OK_NUM_PLAYERS={0}".format(nplayers)
-                        bad="POLL_BAD_NUM_PLAYERS={0}".format(nplayers)
-                        bg[best],bg[ok],bg[bad]=[child['numvotes'] for child in poll_result.findChildren()]
-                        colNames.extend([best,ok,bad])
-                    except:
-                        continue
+                if(bg['MAX_PLAYER_MANUFACTURER']!=''):
+                    for nplayers in range(1,min(31,int(bg['MAX_PLAYER_MANUFACTURER'])+1)):
+                        poll_result=soup.find("results",numplayers=nplayers)
+                        try:
+                            best="POLL_BEST_NUM_PLAYERS={0}".format(nplayers)
+                            ok="POLL_OK_NUM_PLAYERS={0}".format(nplayers)
+                            bad="POLL_BAD_NUM_PLAYERS={0}".format(nplayers)
+                            bg[best],bg[ok],bg[bad]=[child['numvotes'] for child in poll_result.findChildren()]
+                            colNames.extend([best,ok,bad])
+                        except:
+                            continue
                 #Num_players
                 #Proposal: Weight "best" by 
                 # Ages
@@ -169,7 +182,15 @@ for ii,gameid in enumerate(all_gameid[8657:]):
                 # format_string=','.join(['%s']*len(colNames))
                 format_string=','.join(['%s']*len(all_colNames))
 
-                cur.execute('INSERT INTO Games VALUES('+format_string+')',(bg[cn] for cn in all_colNames))
+                try:
+                    cur.execute('INSERT INTO Games VALUES('+format_string+')',(bg[cn] for cn in all_colNames))
+                except:
+                    try:
+                        bg['GAME_NAME']=soup.find("name",type="alternate").attrs['value']
+                        cur.execute('INSERT INTO Games VALUES('+format_string+')',(bg[cn] for cn in all_colNames))
+                    except:
+                        skipped_game_ids.append(bg['GAME_ID'])
+                        skip=True
                 # cur.execute('INSERT INTO Games(%s) VALUES(%s)',('`'+'`,`'.join(colNames)+'`',bg[cn]))
 
 
@@ -191,11 +212,13 @@ for ii,gameid in enumerate(all_gameid[8657:]):
                     bg['YEAR']='NULL'
                 # insert_basics_cmd = 'INSERT INTO Basics VALUES('+",".join([bg['GAME_ID'],bg['GAME_NAME'],bg['YEAR'],"'"+bg['URL']+"'","'"+bg['IMAGE']+"'","'''"+bg['DESCRIPTION']+"'''"]) +');'
                 # cur.execute(insert_basics_cmd)
-                cur.execute('INSERT INTO Basics VALUES(%s,%s,%s,%s,%s,%s)',(bg['GAME_ID'],bg['GAME_NAME'],bg['YEAR'],bg['URL'],bg['IMAGE'],bg['DESCRIPTION']))
+                if(not skip):
+                    cur.execute('INSERT INTO Basics VALUES(%s,%s,%s,%s,%s,%s)',(bg['GAME_ID'],bg['GAME_NAME'],bg['YEAR'],bg['URL'],bg['IMAGE'],bg['DESCRIPTION']))
             
             # '''For each comment, extract that username and rating.
             # Define and execute MySQL command here to fill the Preferences table.'''
-            for comment in comments:
-                # insert_preferences_cmd = 'INSERT INTO Preferences VALUES('+','.join(["'"+comment.attrs['username']+"'",bg['GAME_ID'],bg['GAME_NAME'],comment.attrs['rating']]) +');'
-                # cur.execute(insert_preferences_cmd)
-                cur.execute('INSERT INTO Preferences VALUES(%s,%s,%s,%s);',(comment.attrs['username'],bg['GAME_ID'],bg['GAME_NAME'],comment.attrs['rating']))
+            if(not skip):
+                for comment in comments:
+                    # insert_preferences_cmd = 'INSERT INTO Preferences VALUES('+','.join(["'"+comment.attrs['username']+"'",bg['GAME_ID'],bg['GAME_NAME'],comment.attrs['rating']]) +');'
+                    # cur.execute(insert_preferences_cmd)
+                    cur.execute('INSERT INTO Preferences VALUES(%s,%s,%s,%s);',(comment.attrs['username'],bg['GAME_ID'],bg['GAME_NAME'],comment.attrs['rating']))

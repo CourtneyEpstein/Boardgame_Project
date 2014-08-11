@@ -54,12 +54,27 @@
 
       <p>Please type the name of a board game you like below.</p>
 
+      <div id="the-basics">
+      <input class="typeahead" type="text" name='boardgame1' id='boardgame1' size='60' placeholder="Your favorite board game">
+      </div>
+
+      <!-- <div class="demo"> -->
+        <!-- <span class="twitter-typeahead" style="position: relative; display: inline-block; direction: ltr;"> -->
+            <!-- <input class="typeahead tt-hint" type="text" style="position: absolute; top: 0px; left: 0px; border-color: trans… 1; background: none repeat scroll 0% 0% rgb(255, 255, 255);" readonly="" autocomplete="off" spellcheck="false" tabindex="-1"></input> -->
+            <!-- <input class="typeahead tt-input" type="text" placeholder="States of USA" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent;" dir="auto"></input>
+            <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; fo…x; text-rendering: optimizelegibility; text-transform: none;"></pre>
+            <span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none; right: auto;"></span> -->
+        <!-- </span> -->
+      <!-- </div> -->
+
+
       <div class="buttonbox">
           <!-- <button id="puppymaker">Make a new puppy.</button> -->
           <button id="querymaker">Query for board games.</button>
       </div>
       <div id="gamebox">
           <p>We recommend the following board games for you:</p>
+          <!-- <strong><div id='echoResult'></div></strong> -->
           <table class="table">
           </table>
       </div>
@@ -72,29 +87,33 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- <script src="static/js/jquery.js"></script> -->
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type=text/javascript>
+          var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
     <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/latest/typeahead.bundle.js"></script>
+    <!-- // <script src="static/js/the-basics.js"></script> -->
     <script>
-        // var add_puppy_to_box = function() {
-        //     $('#puppybox').append('<img src="http://www.tehcute.com/pics/201109/puppy-with-hanging-tongue-in-a-towel-big.jpg">');
-        // }
+
         var query_for_games = function() {
-            games = [];
-            jQuery.ajax(
-              'db_json',
-              {success:
-                function(data) {
-                  games = data.games;
-                  $("#gamebox tr").remove();
-                  for (i=0; i < games.length; i++) {
-                    $("#gamebox table").append('<tr><td>' + games[i]['game'] + '</td></tr>');
-                  }
+            $.ajax({
+            type: "GET",
+            url: $SCRIPT_ROOT + "/echo/",
+            contentType: "application/json; charset=utf-8",
+            data: { echoValue: $('input[name="boardgame1"]').val() },
+            success: function(data) {
+                games = data.games;
+                $("#gamebox tr").remove();
+                for (i=0; i < games.length; i++) {
+                  $("#gamebox table").append('<tr> <td> <img width=150 src='+games[i]['image']+'>  </td> <td>' + '<a href='+games[i]['url']+'>' + games[i]['game'] + ' ('+games[i]['year']+') <\a> </td> <td> '+ games[i]['description']+' </td> </tr>');
                 }
               }
-            )
+            })
+
         }
         $(document).ready(function() {
-            // $('#puppymaker').click(add_puppy_to_box);
             $('#querymaker').click(query_for_games);
+
             }
         )
     </script>

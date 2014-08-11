@@ -1,16 +1,19 @@
-from flask import Flask,render_template,jsonify
+from flask import Flask,render_template,jsonify,request
 from app import app
 import pymysql as mdb
+import sys
+sys.path.append("../recommend/")
+import recommend
 
 db = mdb.connect(user="root", passwd="mandrake", host="localhost", db="boardgamegeek", charset='utf8')
 
 @app.route('/')
 @app.route('/index')
 
-def index():
-    return render_template("index.html",
-        title = 'Home', user = { 'nickname': 'Courtney' },
-        )
+# def index():
+#     return render_template("index.html",
+#         title = 'Home', user = { 'nickname': 'Courtney' },
+#         )
 
 # @app.route('/db')
 # def cities_page():
@@ -50,5 +53,35 @@ def games_json():
     games = []
     for result in query_results:
         games.append(dict(game=result[0], url=result[1], image=result[2]))
+    return jsonify(dict(games=games))
+
+
+# @app.before_request
+# def before_request():
+#     if request.path != '/':
+#         if request.headers['content-type'].find('application/json'):
+#             return 'Unsupported Media Type', 415
+ 
+# # @app.route('/')
+# # def index():
+# #     return render_template('index1.html')
+ 
+@app.route('/echo/', methods=['GET'])
+def echo():
+    ret_data = {"value": request.args.get('echoValue')}
+    # print ret_data
+    # PYTHON MAGIC
+    recommendations=recommend.make_recommendation(ret_data['value'])
+    # recommendations=ret_data[i]
+    with db:
+        cur = db.cursor()
+        # print "LOOK AT ME!!!!!!!",ret_data['value']
+        cur.execute("SELECT GAME_NAME,URL,IMAGE,DESCRIPTION,YEAR FROM Basics WHERE GAME_ID IN ("+"'" + "','".join(str(rec) for rec in recommendations) +"');")
+        query_results = cur.fetchall()
+    # print 'TRY THIS!!!!!!!!',query_results
+    games = []
+    for result in query_results:
+        games.append(dict(game=result[0], url=result[1], image=result[2], description=result[3], year=result[4]))
+    # print 'LOOOK!!',games
     return jsonify(dict(games=games))
 
