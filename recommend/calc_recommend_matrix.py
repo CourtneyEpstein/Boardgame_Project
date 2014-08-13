@@ -13,7 +13,8 @@ try:
     preferences
 except:
     print "Reading from MySQL..."
-    preferences=pd.io.sql.read_sql('SELECT P.USER_NAME,P.GAME_ID,P.USER_RATING FROM Preferences AS P LEFT JOIN (SELECT USER_NAME,COUNT(DISTINCT GAME_ID) AS CNT FROM Preferences GROUP BY USER_NAME) as TMP ON P.USER_NAME=TMP.USER_NAME WHERE TMP.CNT BETWEEN 10 AND 100;',con)
+    # preferences=pd.io.sql.read_sql('SELECT P.USER_NAME,P.GAME_ID,P.USER_RATING FROM Preferences AS P LEFT JOIN (SELECT USER_NAME,COUNT(DISTINCT GAME_ID) AS CNT FROM Preferences GROUP BY USER_NAME) as TMP ON P.USER_NAME=TMP.USER_NAME WHERE TMP.CNT BETWEEN 10 AND 100;',con)
+    preferences=pd.io.sql.read_sql('SELECT P.USER_NAME,P.GAME_ID,P.USER_RATING FROM Preferences AS P LEFT JOIN (SELECT USER_NAME,COUNT(DISTINCT GAME_ID) AS CNT FROM Preferences GROUP BY USER_NAME) as TMP ON P.USER_NAME=TMP.USER_NAME WHERE TMP.CNT > 10 ;',con)
     print "Done reading from MySQL."
 
 # preferences=pd.io.sql.read_sql('SELECT * FROM Preferences LIMIT 100000;',con,coerce_float=True)
@@ -46,7 +47,7 @@ cosine_similarity_gameXgame = diag_norm.dot(gameXgame).dot(diag_norm)
 
 '''Output resulting similarity matrix to file'''
 pickle.dump(translate,open( "translator.pkl", "wb" ))
-pickle.dump(cosine_similarity_gameXgame,open( "game_recommendation_matrix_cosine.pkl", "wb" ))
+pickle.dump(cosine_similarity_gameXgame,open( "game_recommendation_matrix_cosine_users_gt_10_ratings.pkl", "wb" ))
 
 
 

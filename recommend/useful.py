@@ -14,8 +14,8 @@ def connect_to_MySQL():
     
 class translator(object):
     '''PROVIDES DICTIONARIES TO CONVERT BETWEEN 
-#      - GAME_ID AND GAME_NAME
-#      - USER_ID AND USER_NAME'''
+      - GAME NUMBER IN MATRIX AND GAME_ID
+      - USER NUMBER IN MATRIX AND USER_NAME'''
     def __init__(self,average_ratings):
         levels_user=average_ratings.index.levels[0].values
         levels_game=average_ratings.index.levels[1].values
@@ -41,4 +41,22 @@ class translator(object):
             return self.user_num_to_id_dict[key]
         else:
             return self.game_num_to_id_dict[key]
+
+
+class translate_games(object):
+    '''PROVIDES DICTIONARIES TO CONVERT BETWEEN 
+      - GAME_ID AND GAME_NAME'''
+    def __init__(self,games):
+        self.game_names=games['GAME_NAME'].values
+        self.game_id=games['GAME_ID'].values
+        self.game_name_to_id_dict=dict(zip(self.game_names,self.game_id))
+        self.game_id_to_name_dict=dict(zip(self.game_id,self.game_names))
+    def name_to_id(self,key):
+        return self.game_name_to_id_dict[key]
+    def id_to_name(self,key):
+        return self.game_id_to_name_dict[key]
+    def get_names(self):
+        return self.game_names
+    def get_ids(self):
+        return self.game_ids
 

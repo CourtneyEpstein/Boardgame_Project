@@ -55,15 +55,18 @@
       <p>Please type the name of a board game you like below.</p>
 
       <div id="the-basics">
-      <input class="typeahead" type="text" name='boardgame1' id='boardgame1' size='60' placeholder="Your favorite board game">
+        <!-- <> -->
+      <input class="typeahead tt" type="text" name='boardgame1' id='boardgame1' size='60' placeholder="Your favorite board game">
       </div>
 
-      <!-- <div class="demo"> -->
+
+
+      <!-- <div class="demo">  -->
         <!-- <span class="twitter-typeahead" style="position: relative; display: inline-block; direction: ltr;"> -->
             <!-- <input class="typeahead tt-hint" type="text" style="position: absolute; top: 0px; left: 0px; border-color: trans… 1; background: none repeat scroll 0% 0% rgb(255, 255, 255);" readonly="" autocomplete="off" spellcheck="false" tabindex="-1"></input> -->
-            <!-- <input class="typeahead tt-input" type="text" placeholder="States of USA" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent;" dir="auto"></input>
-            <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; fo…x; text-rendering: optimizelegibility; text-transform: none;"></pre>
-            <span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none; right: auto;"></span> -->
+            <!-- <input class="typeahead tt-input" type="text" placeholder="States of USA" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent;" dir="auto"></input> -->
+            <!-- <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; fo…x; text-rendering: optimizelegibility; text-transform: none;"></pre> -->
+            <!-- <span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none; right: auto;"></span> -->
         <!-- </span> -->
       <!-- </div> -->
 
@@ -91,8 +94,8 @@
           var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
     <script src="static/js/bootstrap.min.js"></script>
-    <script src="static/js/latest/typeahead.bundle.js"></script>
-    <!-- // <script src="static/js/the-basics.js"></script> -->
+    <script src="static/js/typeahead.bundle.js"></script>
+    <script src="static/js/the-basics.js"></script>
     <script>
 
         var query_for_games = function() {

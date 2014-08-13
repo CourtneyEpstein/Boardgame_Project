@@ -3,7 +3,7 @@ from app import app
 import pymysql as mdb
 import sys
 sys.path.append("../recommend/")
-import recommend
+# import recommend
 
 db = mdb.connect(user="root", passwd="mandrake", host="localhost", db="boardgamegeek", charset='utf8')
 
@@ -71,8 +71,10 @@ def echo():
     ret_data = {"value": request.args.get('echoValue')}
     # print ret_data
     # PYTHON MAGIC
-    recommendations=recommend.make_recommendation(ret_data['value'])
-    # recommendations=ret_data[i]
+    # recommendations=recommend.make_recommendation(ret_data['value'])
+    # recommendations=ret_data.values()
+    # print recommendations
+    recommendations=[2,4,24]
     with db:
         cur = db.cursor()
         # print "LOOK AT ME!!!!!!!",ret_data['value']
