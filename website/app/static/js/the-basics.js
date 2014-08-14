@@ -47,3 +47,4 @@ name: 'items',
 displayKey: 'value',
 source: substringMatcher(items)
 });
+
