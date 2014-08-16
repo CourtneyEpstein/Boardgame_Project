@@ -898,7 +898,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
-  color: #333;
+  color: #000;
   background-color: #fff;
 }
 input,
@@ -910,6 +910,7 @@ textarea {
   line-height: inherit;
 }
 a {
+  /*color: rgba(255,255,255,1);*/
   color: #428bca;
   text-decoration: none;
 }
@@ -2058,7 +2059,10 @@ pre code {
   }
 }
 table {
-  background-color: transparent;
+  background-color:rgba(255,255,255,0.9);
+  /*color:rgb(0,0,0,1);*/
+  /*background-color:rgba(147,175,33,0.9);*/
+  /*background-color: transparent;*/
 }
 th {
   text-align: left;

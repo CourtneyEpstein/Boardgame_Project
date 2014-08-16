@@ -74,7 +74,7 @@ def echo():
     # recommendations=recommend.make_recommendation(ret_data['value'])
     # recommendations=ret_data.values()
     # print recommendations
-    recommendations=[2,4,24]
+    recommendations=[13,148228,34635]
     with db:
         cur = db.cursor()
         # print "LOOK AT ME!!!!!!!",ret_data['value']
