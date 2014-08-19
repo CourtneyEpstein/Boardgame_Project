@@ -11,10 +11,13 @@
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap.css" rel="stylesheet">
+    <link href="static/css/star-rating.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="static/css/the-big-picture.css" rel="stylesheet">
     <!-- <link href="static/starter-template.css" rel="stylesheet"> -->
     <link href="static/css/typeaheadjs.css" rel = "stylesheet">
+    <link href="static/css/slider.css" rel = "stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -33,11 +36,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">okmeeple</a>
+          <a class="navbar-brand" href="#">Project name</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#home">Home</a></li>
+            <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -45,14 +48,13 @@
       </div>
     </div>
 
-    <div class="container" id="home">
-    <div id="headerwrap">
-      <header class="clearfix">
-        <!-- <h1>okmeeple</h1> -->
-        <img src="static/img/OKM3.png" width=800px>
-        <!-- <p class="lead">Find your perfect board game match.</p> -->
-      </header>
-    </h1>
+    <div class="container">
+
+    <div class="starter-template">
+      <h1>okmeeple</h1>
+      <p class="lead">Find your perfect board game match.</p>
+    </div>
+
     <div class="row">
       <form class="form-horizontal col-md-4" role="form">
         <div class="form-group">
@@ -64,7 +66,6 @@
         <div class="form-group">
           <label for="playingtime">Playing Time:</label>
           <select class="form-control" name="playingtime" >
-            <option value="0">I'm flexible</option>
             <option value="1">25 minutes (or less)</option>
             <option value="2">~ 30 minutes</option>
             <option value="3">~ 1 hour</option>
@@ -77,7 +78,6 @@
         <div class="form-group">
           <label for="NumPlayers">Number of Players: </label>
           <select class="form-control" name="NumPlayers" >
-            <option value="0">Anything goes</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -89,7 +89,15 @@
             <option value="9">9</option>
             <option value="10">10+</option>
           </select>
+          <!-- <span id="NumPlayersCurrentSliderValLabel">
+            <span id="NumPlayersSliderVal">4</span>
+          </span><br>
+          <b>1 </b><input id="NumPlayers" name="NumPlayers" data-slider-id='NumPlayersSlider' type="int" data-slider-tooltip="hide" data-slider-handle="square" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="4"/><b> 10+</b> -->
         </div>
+
+        <input id="stars" name="stars"  value="0" type="int" class="rating" min=0 max=5 step=0.5 data-container-class="text-center" data-glyphicon=0 data-size="xs">
+        <input id="stars" name="stars"  value="0" type="int" class="rating" min=0 max=5 step=0.5 data-container-class="text-center" data-glyphicon=0 data-size="xs">
+      
       </form>
     </div>
 
@@ -97,8 +105,18 @@
         <div class="buttonbox">
             <button class="btn btn-default" id="querymaker">Find your match!</button>
         </div>
+
         <div id="wrapper">
           <div id="columns">
+            <div class="pin">
+            <input id="stars" name="stars"  value="0" type="int" class="rating" min=0 max=5 step=0.5 data-container-class="text-center" data-glyphicon=0 data-size="xs">
+            </div>
+
+            <!-- <div class="pin">
+              <a >
+            <input id="stars" name="stars"  value="0" type="int" class="rating" min=0 max=5 step=0.5 data-container-class="text-center" data-glyphicon=0 data-size="xs">
+          </a>
+            </div> -->
           </div>
         </div>
     </div>
@@ -106,57 +124,32 @@
     
 
   </div>
-
-
-    <!-- <div id="myModal" class="modal fade" tabindex="-1" role="dialog"> -->
-      <!-- <div class="modal-dialog"> -->
-      <!-- <div class="modal-content"> -->
-      <!-- <div class="modal-header"> -->
-        <!-- <button type="button" class="close" data-dismiss="modal">×</button> -->
-        <!-- <h3 class="modal-title">Heading</h3> -->
-      <!-- </div> -->
-      <!-- <div class="modal-body"> -->
-        <!--  -->
-      <!-- </div> -->
-      <!-- <div class="modal-footer"> -->
-        <!-- <button class="btn btn-default" data-dismiss="modal">Close</button> -->
-      <!-- </div> -->
-       <!-- </div> -->
-      <!-- </div> -->
-    <!-- </div>     -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-    <!-- /.container -->
-
+   
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- <script src="static/js/jquery.js"></script> -->
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.js"></script>
     <script type=text/javascript>
           var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
     <script src="static/js/bootstrap.js"></script>
     <script src="static/js/typeahead.bundle.js"></script>
     <script src="static/js/the-basics.js"></script>
+    <script src="static/js/star-rating.js"></script>
     <script>
+
+
+      
+        // $("#input-25").on("rating.clear", function(event) {
+            // alert("Your rating is reset")
+        // });
+        // $("#input-25").on("rating.change", function(event, value, caption) {
+            // alert("You rated: " + value + " = " + $(caption).text());
+        // });
+
+        // values = $('#stars').serialize();
 
 
         var query_for_games = function() {
@@ -164,29 +157,36 @@
                 type: "GET",
                 url: $SCRIPT_ROOT + "/get_games/",
                 contentType: "application/json; charset=utf-8",
-                data: { gamename: $('input[name="boardgame1"]').val(),playingtime: $('select[name="playingtime"]').val(), numplayers: $('select[name="NumPlayers"]').val()},
+                // data: { gamename: $('input[name="boardgame1"]').val(),playingtime: $('select[name="playingtime"]').val(), numplayers: $('input[id="NumPlayers"]').val()},
+                data: {stars:$('input[name="stars"]').val(), gamename: $('input[name="boardgame1"]').val(),playingtime: $('select[name="playingtime"]').val(), numplayers: $('select[name="NumPlayers"]').val()},
+                // data: { echoValue: $('input[name="boardgame1"]').val(), },
+
                 success: function(data) {
                     games = data.games;
                     // $("#columns ").remove();
                     var teststring ='';
                     for (i=0; i < games.length; i++) {
-                      teststring += '<div class="pin"><a title="Game '+i+'" href="#"><h3 align=center>'+games[i]['game']+'</h3><img class="thumbnail img-responsive" src="'+games[i]['image']+'"><ul><li>Expected Playing Time: '+games[i]['playingtime']+' minutes</li><li>Supports '+games[i]['min_players']+' to '+games[i]['max_players']+' players</li><li>'+games[i]['game_weight']+'</li></ul></a></div>';
+                      // teststring += '<div class="pin"><a title="Game '+i+'" href="#"><h4 align=center>'+games[i]['game']+'</h4><img class="thumbnail img-responsive" src="'+games[i]['image']+'"><ul><li>Expected Playing Time: '+games[i]['playingtime']+' minutes</li><li>Supports '+games[i]['min_players']+' to '+games[i]['max_players']+' players</li><li>'+games[i]['game_weight']+'</li></ul></a><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star"></span> Star</button></div>';
+                      // teststring += '<div class="pin"><a title="Game '+i+'" href="#"><h3 align=center>'+games[i]['game']+'</h3><img class="thumbnail img-responsive" src="'+games[i]['image']+'"><ul><li>Expected Playing Time: '+games[i]['playingtime']+' minutes</li><li>Supports '+games[i]['min_players']+' to '+games[i]['max_players']+' players</li><li>'+games[i]['game_weight']+'</li></ul></a></div>';
+                      // teststring += '<div class="pin"><a title="Game '+i+'" href="#"><h3 align=center>'+games[i]['game']+'</h3><img class="thumbnail img-responsive" src="'+games[i]['image']+'"><ul><li>Expected Playing Time: '+games[i]['playingtime']+' minutes</li><li>Supports '+games[i]['min_players']+' to '+games[i]['max_players']+' players</li><li>'+games[i]['game_weight']+'</li></ul></a><input id="stars" name="stars"  value="0" type="int" class="rating" min=0 max=5 step=0.5 data-container-class="text-center" data-glyphicon=0 data-size="xs"></div>';
+                      teststring += '<div class="pin"><input id="stars" name="stars"  value="0" type="int" class="rating" min=0 max=5 step=0.5 data-container-class="text-center" data-glyphicon=0 data-size="xs"></div>';
+                      
+
                     }
 
-                      // $("#gamebox ").append('<div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 1" href="#"><img class="thumbnail img-responsive" src="'+games[i]['image']+'"></a></div>');
-                      // $("#columns ").append('<div class="pin"><a title="Game '+i+'" href="#"><h4 align=center>'+games[i]['game']+'</h4><img class="thumbnail img-responsive" src="'+games[i]['image']+'"><ul><li>Expected Playing Time: '+games[i]['playingtime']+' minutes</li><li>Supports '+games[i]['min_players']+' to '+games[i]['max_players']+' players</li><li>Brainpower: '+games[i]['game_weight']+' out of 5</li></ul></a></div>');
-
                     $("#columns ").html(teststring);
-                    // $("#gamebox ").append('</div></div>')
               }
             })
 
         }
 
+
+
         $(document).ready(function() {
 
-
+            // $(".rating-kv").rating();
             $('#querymaker').click(query_for_games);
+
 
             }
         )

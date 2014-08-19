@@ -11,7 +11,7 @@ body {
 }
 
 .full {
-  background: url(../pictures/DSC06692-light.JPG) no-repeat center top fixed; 
+  background: url(../img/DSC06692-light.JPG) no-repeat center top fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

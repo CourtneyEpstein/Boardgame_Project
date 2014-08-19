@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="static/css/the-big-picture.css" rel="stylesheet">
     <!-- <link href="static/starter-template.css" rel="stylesheet"> -->
@@ -49,8 +50,8 @@
     <div id="headerwrap">
       <header class="clearfix">
         <!-- <h1>okmeeple</h1> -->
-        <img src="static/img/OKM3.png" width=800px>
-        <!-- <p class="lead">Find your perfect board game match.</p> -->
+        <img src="static/img/OKM 1.png">
+        <p class="lead">Find your perfect board game match.</p>
       </header>
     </h1>
     <div class="row">
@@ -159,12 +160,45 @@
     <script>
 
 
+         //  $('#querymaker').bind('click', function() {
+         //  var name = $('input[name="boardgame1"]').val();
+         //  var time = $('select[name="playingtime"]').val();
+         //  var players = $('input[name="NumPlayers"]').val()
+         //   $.getJSON("/get_games", {
+         //     gamename:  name,
+         //     playingtime: time,
+         //     numplayers: players,
+         //   }, function(data) {
+         //    games = data.games;
+         //            $("#columns ").remove();
+         //            var teststring ='';
+         //            for (i=0; i < games.length; i++) {
+         //              teststring += '<div class="pin"><a title="Game '+i+'" href="#"><h4 align=center>'+games[i]['game']+'</h4><img class="thumbnail img-responsive" src="'+games[i]['image']+'"><ul><li>Expected Playing Time: '+games[i]['playingtime']+' minutes</li><li>Supports '+games[i]['min_players']+' to '+games[i]['max_players']+' players</li><li>'+games[i]['game_weight']+'</li></ul></a></div>';
+         //            }
+         //            $("#columns ").html(teststring);
+         //            // $("#gamebox ").append('</div></div>')
+         //     // $("#Poet").text(data.result['Poet']);
+         //     // $("#title").text(data.result['title']);
+         //     // $("#text").empty();
+         //     // $("#text").append(data.result['html']);
+         //     // $("#rhyme").append(data.result['rhyme']);
+         //     // $('[name="rhyme_scale"]').val(rhyme_in); 
+         //     // $('[name="length_scale"]').val(length_in); 
+         //     // $('[name="mood_scale"]').val(sent_in); 
+         //   });
+         //   return false;
+         // });
+
         var query_for_games = function() {
             $.ajax({
                 type: "GET",
                 url: $SCRIPT_ROOT + "/get_games/",
                 contentType: "application/json; charset=utf-8",
+                // var sliderval = $("#NumPlayers").slider("value");
+                // data: { gamename: $('input[name="boardgame1"]').val(),playingtime: $('select[name="playingtime"]').val(), numplayers: $('input[name="NumPlayers"]').val()},
                 data: { gamename: $('input[name="boardgame1"]').val(),playingtime: $('select[name="playingtime"]').val(), numplayers: $('select[name="NumPlayers"]').val()},
+                // data: { echoValue: $('input[name="boardgame1"]').val(), },
+
                 success: function(data) {
                     games = data.games;
                     // $("#columns ").remove();

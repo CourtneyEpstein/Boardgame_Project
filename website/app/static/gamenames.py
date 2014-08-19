@@ -13,8 +13,8 @@ def connect_to_MySQL():
     con = mdb.connect('localhost', mysqlpass[0], mysqlpass[1], 'boardgamegeek',charset='utf8')
     return con
 
-path='/Users/athena/Insight/Boardgame_Project/recommend/'
-preferences=pickle.load(open(path + "preferences_user_gt_10_game_gt_10.pkl", "rb" ))
+path='/Users/athena/Insight/Boardgame_Project/final/'
+preferences=pickle.load(open(path + "preferences_user_gt_10_game_gt_50.pkl", "rb" ))
 
 game_id=np.unique(list(preferences['GAME_ID']))
 
