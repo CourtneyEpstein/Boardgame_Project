@@ -163,6 +163,9 @@
         all_inputs={}
         numratings=0
 
+        all_inputs={}
+        numratings=0
+
         var query_for_games = function() {
             numratings=numratings+1;
             console.log(numratings);
@@ -175,6 +178,7 @@
                 type: "GET",
                 url: $SCRIPT_ROOT + "/get_games/",
                 contentType: "application/json; charset=utf-8",
+<<<<<<< HEAD
 <<<<<<< HEAD
                 data: { gamename: $('input[name="boardgame1"]').val(),playingtime: $('select[name="playingtime"]').val(), numplayers: $('select[name="NumPlayers"]').val()},
                 success: function(data) {
@@ -192,6 +196,8 @@
                     // $("#gamebox ").append('</div></div>')
               }
 =======
+=======
+>>>>>>> 31c463e... Website updated, includes feedback
                 // data: { gamename: $('input[name="boardgame1"]').val(),playingtime: $('select[name="playingtime"]').val(), numplayers: $('select[name="NumPlayers"]').val()},
                 data: all_inputs,
                 success: function(data){
@@ -203,7 +209,10 @@
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 31c463e... Website updated, includes feedback
         function update_query(game_id,rating) {
           numratings=numratings+1;
           all_inputs['game'+numratings+'_id']=game_id;

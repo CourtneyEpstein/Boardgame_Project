@@ -26,6 +26,7 @@ def games_json():
         games.append(dict(game=result[0], url=result[1], image=result[2]))
     return jsonify(dict(games=games))
  
+<<<<<<< HEAD
 # @app.route('/echo/', methods=['GET'])
 @app.route("/get_games/")
 def get_games():
@@ -39,6 +40,9 @@ def get_games():
     get_recs.add_input_num_players(ret_data["numplayers"])
     recommendations = get_recs.recommend()
     # recommendations=[13,148228,34635,20,70,90]
+=======
+def process_recommendations(recommendations):
+>>>>>>> 31c463e... Website updated, includes feedback
     with db:
         cur = db.cursor()
         # print "LOOK AT ME!!!!!!!",ret_data['value']
@@ -62,9 +66,12 @@ def get_games():
             game_weight="Uncertain Brainpower Requirements"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         games.append(dict(game=result[0], url=result[1], image=result[2], description=result[3], year=result[4], playingtime=int(result[5]),min_players=result[6],max_players=result[7],game_weight=game_weight))
     # print 'LOOOK!!',games
 =======
+=======
+>>>>>>> 31c463e... Website updated, includes feedback
 def initialize(ret_data):
     get_recs=recommend.rec_engine()
     get_recs.add_input_game(ret_data["game1_name"],ret_data["game1_rating"])
