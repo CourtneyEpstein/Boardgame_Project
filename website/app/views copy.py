@@ -26,19 +26,7 @@ def games_json():
         games.append(dict(game=result[0], url=result[1], image=result[2]))
     return jsonify(dict(games=games))
  
-# @app.route('/echo/', methods=['GET'])
-@app.route("/get_games/")
-def get_games():
-    ret_data = {"game_name": request.args.get('gamename'),"playingtime":request.args.get('playingtime'),"numplayers":request.args.get('numplayers'),"stars":request.args.get('stars')}
-    print ret_data
-    # PYTHON MAGIC
-    get_recs=recommend.rec_engine()
-    get_recs.add_input_game(ret_data["game_name"],8)
-    # # get_recs.add_input_game('The Settlers of Catan',5)
-    get_recs.add_input_time(ret_data["playingtime"])
-    get_recs.add_input_num_players(ret_data["numplayers"])
-    recommendations = get_recs.recommend()
-    # recommendations=[13,148228,34635,20,70,90]
+def process_recommendations(recommendations):
     with db:
         cur = db.cursor()
         # print "LOOK AT ME!!!!!!!",ret_data['value']
@@ -60,41 +48,38 @@ def get_games():
             game_weight=brains[5]
         else:
             game_weight="Uncertain Brainpower Requirements"
+        games.append(dict(game=result[0], url=result[1], image=result[2], description=result[3], year=result[4], playingtime=int(result[5]),min_players=result[6],max_players=result[7],game_weight=game_weight, game_id=result[9]))
+    return games
 
-<<<<<<< HEAD
-        games.append(dict(game=result[0], url=result[1], image=result[2], description=result[3], year=result[4], playingtime=int(result[5]),min_players=result[6],max_players=result[7],game_weight=game_weight))
-    # print 'LOOOK!!',games
-=======
-def initialize(ret_data):
-    get_recs=recommend.rec_engine()
-    get_recs.add_input_game(ret_data["game1_name"],ret_data["game1_rating"])
-    get_recs.add_input_time(ret_data["playingtime"])
-    get_recs.add_input_num_players(ret_data["numplayers"])
-    return get_recs
+get_recs=''
 
 # @app.route('/echo/', methods=['GET'])
 @app.route("/get_games/")
 def get_games():
-    ret_data = {"game1_name": request.args.get('game1_name'),"game1_rating": request.args.get('game1_rating'),"playingtime":request.args.get('playingtime'),"numplayers":request.args.get('numplayers')}
-    get_recs=initialize(ret_data)
+    ret_data = {"game_name": request.args.get('gamename'),"playingtime":request.args.get('playingtime'),"numplayers":request.args.get('numplayers')}
+    print ret_data['game_name']
+    # PYTHON MAGIC
+    global get_recs
+    # if(get_recs==''):
+    get_recs=recommend.rec_engine()
+    get_recs.add_input_game(ret_data["game_name"],8)
+    # # get_recs.add_input_game('The Settlers of Catan',5)
+    get_recs.add_input_time(ret_data["playingtime"])
+    get_recs.add_input_num_players(ret_data["numplayers"])
     recommendations = get_recs.recommend()
-    # print get_recs.get_input_game()
+    print get_recs.get_input_game()
+    # recommendations=[13,148228,34635,20,70,90]
     games=process_recommendations(recommendations)
     return jsonify(dict(games=games))
 
 @app.route("/update_games/")
 def update_games():
-    ret_data = {"game1_name": request.args.get('game1_name'),"game1_rating": request.args.get('game1_rating'),"playingtime":request.args.get('playingtime'),"numplayers":request.args.get('numplayers')}
-    get_recs=initialize(ret_data)
-    ii = 2
-    while 'game{0}_id'.format(ii) in request.args:
-        # ret_data['game{0}_id'.format(ii)]=request.args.get('game{0}_id'.format(ii))
-        # ret_data['game{0}_rating'.format(ii)]=request.args.get('game{0}_rating'.format(ii))
-        get_recs.add_input_game_id(request.args.get('game{0}_id'.format(ii)),float(request.args.get('game{0}_rating'.format(ii))))
-        ii=ii+1
-    print "!!!!!!!!!!!!!!",ret_data
+    global get_recs
+    ret_data = {"game_id": request.args.get('gameid'),"rating":request.args.get('rating')}
+    get_recs.add_input_game_id(ret_data['game_id'],float(ret_data['rating']))
+    print get_recs.get_input_game()
     recommendations = get_recs.recommend()
     games=process_recommendations(recommendations)
->>>>>>> 31c463e... Website updated, includes feedback
     return jsonify(dict(games=games))
+
 
