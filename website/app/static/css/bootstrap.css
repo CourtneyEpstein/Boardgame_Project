@@ -898,8 +898,8 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 1.42857143;
-  /*color: #000;*/
-  color: rgb(21, 61, 112);
+  color: #000;
+  /*color: rgb(21, 61, 112);*/
   background-color: #fff;
 }
 input,
